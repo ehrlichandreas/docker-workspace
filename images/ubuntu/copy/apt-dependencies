@@ -1,0 +1,16 @@
+apt-utils=1.9.4*
+bash=5.0*
+bash-completion=1:2.9*
+curl=7.65.3*
+git=1:2.20.1*
+openssh-client=1:8.0*
+openssh-server=1:8.0*
+gzip=1.10*
+p7zip=16.02*
+p7zip-full=16.02*
+ssh=1:8.0*
+sudo=1.8.27*
+tar=1.30*
+vim=2:8.1*
+wget=1.20.3*
+zip=3.0*
