@@ -1,0 +1,4 @@
+ca-certificates=20190110
+curl=7.65.3*
+libssl1.1=1.1.1*
+unzip=6.0*
