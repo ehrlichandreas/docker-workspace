@@ -1,0 +1,17 @@
+-Xms4g
+-Xmx16g
+-XX:ReservedCodeCacheSize=2g
+-XX:+UseCompressedOops
+#-XX:+UseConcMarkSweepGC
+-XX:SoftRefLRUPolicyMSPerMB=100
+-ea
+-Dsun.io.useCanonCaches=false
+-Djava.net.preferIPv4Stack=true
+-XX:+HeapDumpOnOutOfMemoryError
+-XX:-OmitStackTraceInFastThrow
+-Dawt.useSystemAAFontSettings=lcd
+-Dsun.java2d.renderer=sun.java2d.marlin.MarlinRenderingEngine
+-server
+-XX:NewRatio=1
+#-XX:MaxJavaStackTraceDepth=-1
+
