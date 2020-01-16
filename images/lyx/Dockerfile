@@ -15,8 +15,6 @@ apt-install-from-file.sh /tmp/apt-dependencies && \
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys A64833C9F8214ACD && \
 add-apt-repository "deb http://ppa.launchpad.net/lyx-devel/release/ubuntu disco main" && \
 add-apt-repository "deb http://archive.ubuntu.com/ubuntu/ disco multiverse" && \
-add-apt-repository "deb http://archive.ubuntu.com/ubuntu/ disco multiverse" && \
-add-apt-repository "deb http://archive.ubuntu.com/ubuntu/ disco multiverse" && \
 apt-get -y update && \
 \
 echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections && \

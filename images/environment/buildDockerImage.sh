@@ -7,7 +7,7 @@ cd "${_THIS_DIR}";
 NOCACHE=false;
 DOCKERFILE="Dockerfile";
 REPOSITORY="ehrlichandreas/workbase-environment";
-VERSION="0.1";
+VERSION="2019.0.1";
 PARENT_VERSION="0.12.19";
 IMAGE_NAME="${REPOSITORY}:${VERSION}";
 

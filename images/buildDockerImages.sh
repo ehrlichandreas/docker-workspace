@@ -27,6 +27,10 @@ cd "environment";
 bash buildDockerImage.sh;
 
 cd "${_THIS_DIR}";
+cd "ide-base";
+bash buildDockerImage.sh;
+
+cd "${_THIS_DIR}";
 cd "intellij-idea-u";
 bash buildDockerImage.sh;
 

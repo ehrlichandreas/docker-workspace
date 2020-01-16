@@ -8,7 +8,7 @@ NOCACHE=false;
 DOCKERFILE="Dockerfile";
 REPOSITORY="ehrlichandreas/workbase-intellij-idea";
 VERSION="2019.3.1";
-PARENT_VERSION="19.03.5";
+PARENT_VERSION="2019.0.1";
 IMAGE_NAME="${REPOSITORY}:u-${VERSION}";
 
 DOCKER_VERSION="${VERSION}";
@@ -20,7 +20,6 @@ BUILD_START="$(date '+%s')";
         --network=host \
         --force-rm=${NOCACHE} \
         --no-cache=${NOCACHE} \
-        --build-arg PARENT_VERSION=${PARENT_VERSION} \
         --build-arg PARENT_VERSION=${PARENT_VERSION} \
         --build-arg IDEA_VERSION=${VERSION} \
         -t "${IMAGE_NAME}" \
