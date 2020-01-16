@@ -15,8 +15,8 @@ images="\
     ehrlichandreas/workbase-terraform:latest \
     ehrlichandreas/workbase-environment:2019.0.1 \
     ehrlichandreas/workbase-environment:latest \
-    ehrlichandreas/ide-base:2019.0.1 \
-    ehrlichandreas/ide-base:latest \
+    ehrlichandreas/workbase-ide-base:2019.0.1 \
+    ehrlichandreas/workbase-ide-base:latest \
     ehrlichandreas/workbase-intellij-idea:u-2019.3.1 \
     ehrlichandreas/workbase-intellij-idea:latest \
     ehrlichandreas/workbase-lyx:2.3.3 \
