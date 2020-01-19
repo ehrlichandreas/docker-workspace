@@ -1,5 +1,5 @@
 #@IgnoreInspection BashAddShebang
-ARG PARENT_VERSION="19.10"
+ARG PARENT_VERSION="19.03"
 
 FROM ehrlichandreas/workbase-dind:${PARENT_VERSION}
 LABEL maintainer="Andreas Ehrlich <ehrlich.andreas@googlemail.com>"
@@ -17,10 +17,11 @@ COPY --chown=root:docker --from="frekele/ant:1.10.3-jdk8" "/opt/ant" "/opt/apps/
 #maven
 COPY --chown=root:docker --from="maven:3.5.2-jdk-8-slim" "/usr/share/maven" "/opt/apps/apache-maven-3.5.2"
 COPY --chown=root:docker --from="maven:3.6.3-jdk-8-slim" "/usr/share/maven" "/opt/apps/apache-maven-3.6.3"
+#yarn
+COPY --chown=root:docker --from="node:12.14.1-slim" "/opt/yarn-v1.21.1" "/opt/apps/yarn-1.21.1"
 #node
 COPY --chown=root:docker --from="node:12.14.1-slim" "/usr/local/bin" "/opt/apps/node-12.14.1/bin"
 COPY --chown=root:docker --from="node:12.14.1-slim" "/usr/local/lib" "/opt/apps/node-12.14.1/lib"
-COPY --chown=root:docker --from="node:12.14.1-slim" "/opt/yarn-v1.21.1" "/opt/apps/yarn-1.21.1"
 COPY --chown=root:docker --from="node:13.6.0-slim" "/usr/local/bin" "/opt/apps/node-13.6.0/bin"
 COPY --chown=root:docker --from="node:13.6.0-slim" "/usr/local/lib" "/opt/apps/node-13.6.0/lib"
 
@@ -31,11 +32,24 @@ export DEBIAN_FRONTEND=noninteractive && \
 export APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=DontWarn && \
 export TERM=xterm-256color && \
 \
+\
+export ANT_VERSION="1.10.3" && \
+export JAVA_VERSION="8" && \
+export MAVEN_VERSION="3.6.3" && \
+export NODE_VERSION="12.14.1" && \
+export YARN_VERSION="1.21.1" && \
+\
 apt-install-from-file.sh /tmp/apt-dependencies && \
 \
 rm -rf /tmp/* && \
 \
-export JAVA_HOME="/opt/apps/openjdk-8" && \
+\
+export ANT_HOME="/opt/apps/apache-ant-${ANT_VERSION}" && \
+update-alternatives --install "/usr/local/bin/ant" "ant" "${ANT_HOME}/bin/ant" 1 && \
+update-alternatives --set "ant" "${ANT_HOME}/bin/ant" && \
+\
+\
+export JAVA_HOME="/opt/apps/openjdk-${JAVA_VERSION}" && \
 update-alternatives --install "/usr/local/bin/java" "java" "${JAVA_HOME}/bin/java" 1 && \
 update-alternatives --set "java" "${JAVA_HOME}/bin/java" && \
 update-alternatives --install "/usr/local/bin/javac" "javac" "${JAVA_HOME}/bin/javac" 1 && \
@@ -45,11 +59,8 @@ update-alternatives --set "javaw" "${JAVA_HOME}/bin/javaw" || echo "javaw not fo
 update-alternatives --install "/usr/local/bin/javaws" "javaws" "${JAVA_HOME}/bin/javaws" 1 || echo "javaws not found" && \
 update-alternatives --set "javaws" "${JAVA_HOME}/bin/javaws" || echo "javaws not found" && \
 \
-export ANT_HOME="/opt/apps/apache-ant-1.10.3" && \
-update-alternatives --install "/usr/local/bin/ant" "ant" "${ANT_HOME}/bin/ant" 1 && \
-update-alternatives --set "ant" "${ANT_HOME}/bin/ant" && \
 \
-export MAVEN_HOME="/opt/apps/apache-maven-3.5.2" && \
+export MAVEN_HOME="/opt/apps/apache-maven-${MAVEN_VERSION}" && \
 update-alternatives --install "/usr/local/bin/mvn" "mvn" "${MAVEN_HOME}/bin/mvn" 1 && \
 update-alternatives --set "mvn" "${MAVEN_HOME}/bin/mvn" && \
 update-alternatives --install "/usr/local/bin/mvnDebug" "mvnDebug" "${MAVEN_HOME}/bin/mvnDebug" 1 || echo "mvnDebug not found" && \
@@ -57,8 +68,9 @@ update-alternatives --set "mvnDebug" "${MAVEN_HOME}/bin/mvnDebug" || echo "mvnDe
 update-alternatives --install "/usr/local/bin/mvnyjp" "mvnyjp" "${MAVEN_HOME}/bin/mvnyjp" 1 || echo "mvnyjp not found" && \
 update-alternatives --set "mvnyjp" "${MAVEN_HOME}/bin/mvnyjp" || echo "mvnyjp not found" && \
 \
-export YARN_HOME="/opt/apps/yarn-1.21.1" && \
-export NODE_HOME="/opt/apps/node-12.14.1" && \
+\
+export YARN_HOME="/opt/apps/yarn-${YARN_VERSION}" && \
+export NODE_HOME="/opt/apps/node-${NODE_VERSION}" && \
 cd "${NODE_HOME}/bin" && \
 rm "${NODE_HOME}/bin/nodejs" && \
 ln -s node nodejs && \
@@ -67,7 +79,7 @@ ln -s "${YARN_HOME}/bin/yarn" yarn && \
 rm "${NODE_HOME}/bin/yarnpkg" && \
 ln -s "${YARN_HOME}/bin/yarnpkg" yarnpkg && \
 \
-export YARN_HOME="/opt/apps/yarn-1.21.1" && \
+export YARN_HOME="/opt/apps/yarn-${YARN_VERSION}" && \
 export NODE_HOME="/opt/apps/node-13.6.0" && \
 cd "${NODE_HOME}/bin" && \
 rm "${NODE_HOME}/bin/nodejs" && \
@@ -77,7 +89,7 @@ ln -s "${YARN_HOME}/bin/yarn" yarn && \
 rm "${NODE_HOME}/bin/yarnpkg" && \
 ln -s "${YARN_HOME}/bin/yarnpkg" yarnpkg && \
 \
-export NODE_HOME="/opt/apps/node-12.14.1" && \
+export NODE_HOME="/opt/apps/node-${NODE_VERSION}" && \
 update-alternatives --install "/usr/local/bin/node" "node" "${NODE_HOME}/bin/node" 1 && \
 update-alternatives --set "node" "${NODE_HOME}/bin/node" && \
 update-alternatives --install "/usr/local/bin/nodejs" "nodejs" "${NODE_HOME}/bin/nodejs" 1 && \
@@ -87,7 +99,8 @@ update-alternatives --set "npm" "${NODE_HOME}/bin/npm" && \
 update-alternatives --install "/usr/local/bin/npx" "npx" "${NODE_HOME}/bin/npx" 1 && \
 update-alternatives --set "npx" "${NODE_HOME}/bin/npx" && \
 \
-export YARN_HOME="/opt/apps/yarn-1.21.1" && \
+\
+export YARN_HOME="/opt/apps/yarn-${YARN_VERSION}" && \
 update-alternatives --install "/usr/local/bin/yarn" "yarn" "${YARN_HOME}/bin/yarn" 1 && \
 update-alternatives --set "yarn" "${YARN_HOME}/bin/yarn" && \
 update-alternatives --install "/usr/local/bin/yarnpkg" "yarnpkg" "${YARN_HOME}/bin/yarnpkg" 1 && \

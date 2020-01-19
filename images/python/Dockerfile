@@ -1,7 +1,7 @@
 #@IgnoreInspection BashAddShebang
 ARG PARENT_VERSION="19.03"
 
-FROM ehrlichandreas/workbase-dind:$PARENT_VERSION
+FROM ehrlichandreas/workbase-dind:${PARENT_VERSION}
 LABEL maintainer="Andreas Ehrlich <ehrlich.andreas@googlemail.com>"
 
 SHELL ["/bin/bash", "-c"]

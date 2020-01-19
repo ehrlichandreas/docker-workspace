@@ -1,51 +1,55 @@
 #!/usr/bin/env bash
 
-_THIS_DIR="$(cd -P -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)";
+build_docker_image() {
+    local _THIS_DIR="$(cd -P -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)";
 
-cd "${_THIS_DIR}";
+    cd "${_THIS_DIR}";
 
-NOCACHE=false;
-DOCKERFILE="Dockerfile";
-REPOSITORY="ehrlichandreas/workbase-ide-base";
-VERSION="2019.0.1";
-PARENT_VERSION="19.03.5";
-IMAGE_NAME="${REPOSITORY}:${VERSION}";
+    local NOCACHE=false;
+    local DOCKERFILE="Dockerfile";
+    local REPOSITORY="ehrlichandreas/workbase-ide-base";
+    local VERSION="2019.0.1";
+    local PARENT_VERSION="19.03.5";
+    local IMAGE_NAME="${REPOSITORY}:${VERSION}";
 
-DOCKER_VERSION="${VERSION}";
+    local DOCKER_VERSION="${VERSION}";
 
-BUILD_START="$(date '+%s')";
+    local BUILD_START="$(date '+%s')";
 
-{
-    docker build \
-        --network=host \
-        --force-rm=${NOCACHE} \
-        --no-cache=${NOCACHE} \
-        --build-arg PARENT_VERSION=${PARENT_VERSION} \
-        --build-arg IDEA_VERSION=${VERSION} \
-        -t "${IMAGE_NAME}" \
-        -t "${REPOSITORY}:latest" \
-        -f "${DOCKERFILE}" \
-        "${_THIS_DIR}";
-} || \
-{
-  echo "There was an error building the image."
-  exit 1
-}
+    {
+        docker build \
+            --network=host \
+            --force-rm=${NOCACHE} \
+            --no-cache=${NOCACHE} \
+            --build-arg PARENT_VERSION=${PARENT_VERSION} \
+            --build-arg IDEA_VERSION=${VERSION} \
+            -t "${IMAGE_NAME}" \
+            -t "${REPOSITORY}:latest" \
+            -f "${DOCKERFILE}" \
+            "${_THIS_DIR}";
+    } || \
+    {
+        echo "There was an error building the image."
+        exit 1
+    }
 
-BUILD_END="$(date '+%s')";
-BUILD_ELAPSED="$(expr ${BUILD_END} - ${BUILD_START})";
+    local BUILD_END="$(date '+%s')";
+    local BUILD_ELAPSED="$(expr ${BUILD_END} - ${BUILD_START})";
 
-echo "";
+    echo "";
 
-if [[ $? -eq 0 ]]; then
-    cat << EOF
-    Docker Image for '${REPOSITORY}' version ${VERSION} is ready to be extended:
+    if [[ $? -eq 0 ]]; then
+        cat << EOF
+Docker Image for '${REPOSITORY}' version ${VERSION} is ready to be extended:
 
-    --> ${IMAGE_NAME}
+--> ${IMAGE_NAME}
 
-    Build completed in ${BUILD_ELAPSED} seconds.
+Build completed in ${BUILD_ELAPSED} seconds.
 
 EOF
-else
-    echo "${REPOSITORY} Docker Image was NOT successfully created. Check the output and correct any reported problems with the docker build operation."
-fi
+    else
+        echo "${REPOSITORY} Docker Image was NOT successfully created. Check the output and correct any reported problems with the docker build operation."
+    fi
+}
+
+build_docker_image "$@";

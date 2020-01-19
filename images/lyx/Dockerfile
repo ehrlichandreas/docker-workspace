@@ -1,7 +1,10 @@
 #@IgnoreInspection BashAddShebang
 ARG PARENT_VERSION="19.10"
+
 FROM ehrlichandreas/workbase-ubuntu:${PARENT_VERSION}
 LABEL maintainer="Andreas Ehrlich <ehrlich.andreas@googlemail.com>"
+
+SHELL ["/bin/bash", "-c"]
 
 COPY ./copy /tmp
 
@@ -22,7 +25,7 @@ apt-install-from-file.sh /tmp/lyx-dependencies && \
 \
 rm -rf /tmp/*
 
-ENV QT_X11_NO_MITSHM 1
+ENV QT_X11_NO_MITSHM=1
 
 ENTRYPOINT []
 CMD ["lyx"]

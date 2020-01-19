@@ -1,7 +1,7 @@
 #@IgnoreInspection BashAddShebang
 ARG PARENT_VERSION="3.7"
 
-FROM ehrlichandreas/workbase-python:$PARENT_VERSION
+FROM ehrlichandreas/workbase-python:${PARENT_VERSION}
 LABEL maintainer="Andreas Ehrlich <ehrlich.andreas@googlemail.com>"
 
 SHELL ["/bin/bash", "-c"]

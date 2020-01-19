@@ -9,8 +9,8 @@ SHELL ["/bin/bash", "-c"]
 COPY ./copy /tmp
 
 ARG IDEA_VERSION="2019.3.1"
-ARG IDEA_SOURCE=https://download.jetbrains.com/idea/ideaIU-${IDEA_VERSION}.tar.gz
-ARG IDEA_LOCAL_DIR=.IntelliJIdeaU
+ARG IDEA_SOURCE="https://download.jetbrains.com/idea/ideaIU-${IDEA_VERSION}.tar.gz"
+ARG IDEA_LOCAL_DIR=".IntelliJIdeaU"
 
 RUN set -eux; \
 export DEBIAN_FRONTEND=noninteractive && \
@@ -18,7 +18,7 @@ export APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=DontWarn && \
 export TERM=xterm-256color && \
 \
 mkdir /opt/idea && \
-curl -fsSL ${IDEA_SOURCE} -o /opt/idea/installer.tgz && \
+curl -fsSL "${IDEA_SOURCE}" -o "/opt/idea/installer.tgz" && \
 cd /opt/idea && \
 tar --strip-components=1 -xzf installer.tgz && \
 rm /opt/idea/installer.tgz && \

@@ -1,5 +1,6 @@
 #@IgnoreInspection BashAddShebang
 ARG PARENT_VERSION="19.10"
+
 FROM ubuntu:${PARENT_VERSION}
 LABEL maintainer="Andreas Ehrlich <ehrlich.andreas@googlemail.com>"
 
