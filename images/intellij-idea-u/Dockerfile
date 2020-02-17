@@ -18,7 +18,7 @@ export APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=DontWarn && \
 export TERM=xterm-256color && \
 \
 mkdir /opt/idea && \
-curl -fsSL "${IDEA_SOURCE}" -o "/opt/idea/installer.tgz" && \
+curl -fksSL "${IDEA_SOURCE}" -o "/opt/idea/installer.tgz" && \
 cd /opt/idea && \
 tar --strip-components=1 -xzf installer.tgz && \
 rm /opt/idea/installer.tgz && \

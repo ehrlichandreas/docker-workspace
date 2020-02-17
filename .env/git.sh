@@ -2,7 +2,8 @@
 
 git_library_import() {
     local _THIS_DIR=$(cd -P -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P);
-    source "${_THIS_DIR}/basic.sh" &>/dev/null || source "./basic.sh" &>/dev/null;
+    source "${_THIS_DIR}/basic.sh" &>/dev/null \
+        || source "./basic.sh" &>/dev/null;
 }
 git_library_import;
 

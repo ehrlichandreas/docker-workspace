@@ -11,7 +11,7 @@ intellij_ideaiu() {
 
     docker_socket_enable;
 
-    local DOCKER_IMAGE_TAG="ehrlichandreas/workbase-intellij-idea:u-2019.3.1";
+    local DOCKER_IMAGE_TAG="ehrlichandreas/workbase-intellij-idea:u-2019.3.3";
 
     local network;
     network="$(docker_network_preferred)";

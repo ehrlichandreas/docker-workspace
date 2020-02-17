@@ -22,6 +22,7 @@ apt-get -y update && \
 \
 echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections && \
 apt-install-from-file.sh /tmp/lyx-dependencies && \
+fc-cache -f -v && \
 \
 rm -rf /tmp/*
 

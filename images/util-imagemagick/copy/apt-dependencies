@@ -1,0 +1,4 @@
+fontconfig=2.13.1*
+ghostscript=9.27*
+imagemagick=8:6.9.10.23*
+ttf-mscorefonts-installer=3.7*

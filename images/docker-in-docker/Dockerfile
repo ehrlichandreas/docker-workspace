@@ -13,7 +13,7 @@ export APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=DontWarn && \
 export TERM=xterm-256color && \
 \
 apt-install-from-file.sh /tmp/apt-dependencies && \
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - && \
+curl -fksSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - && \
 add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu cosmic stable" && \
 apt-install-from-file.sh /tmp/docker-dependencies && \
 \
@@ -21,9 +21,9 @@ dockerd -v; \
 docker -v; \
 docker-compose --version; \
 \
-curl -fL https://raw.githubusercontent.com/docker/docker-ce/master/components/cli/contrib/completion/bash/docker \
+curl -fksSL https://raw.githubusercontent.com/docker/docker-ce/master/components/cli/contrib/completion/bash/docker \
     -o /etc/bash_completion.d/docker; \
-curl -fL https://raw.githubusercontent.com/docker/compose/master/contrib/completion/bash/docker-compose \
+curl -fksSL https://raw.githubusercontent.com/docker/compose/master/contrib/completion/bash/docker-compose \
     -o /etc/bash_completion.d/docker-compose && \
 \
 touch /var/run/docker.sock && \

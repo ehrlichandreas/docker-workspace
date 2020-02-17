@@ -132,7 +132,7 @@ git_branch() {
 export -f git_branch;
 
 docker_image_connected() {
-    local ENV_O2_DOCKER_IMAGE_CONNECTED=${ENV_O2_DOCKER_IMAGE_CONNECTED:=""}
+    local ENV_DOCKER_IMAGE_CONNECTED=${ENV_DOCKER_IMAGE_CONNECTED:=""}
     local COLOR='\033[01;34m'
     local NC='\033[0m'
 

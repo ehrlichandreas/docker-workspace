@@ -42,6 +42,22 @@ build_docker_images() {
     cd "lyx";
     bash buildDockerImage.sh;
 
+    cd "${_THIS_DIR}";
+    cd "util-base";
+    bash buildDockerImage.sh;
+
+    cd "${_THIS_DIR}";
+    cd "util-imagemagick";
+    bash buildDockerImage.sh;
+
+    cd "${_THIS_DIR}";
+    cd "util-pdf";
+    bash buildDockerImage.sh;
+
+    cd "${_THIS_DIR}";
+    cd "util-scanner";
+    bash buildDockerImage.sh;
+
 
     local TIME_END="$(date '+%s')";
     local TIME_ELAPSED="$(expr ${TIME_END} - ${TIME_START})";

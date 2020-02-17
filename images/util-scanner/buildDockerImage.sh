@@ -7,10 +7,10 @@ build_docker_image() {
 
     local NOCACHE=false;
     local DOCKERFILE="Dockerfile";
-    local REPOSITORY="ehrlichandreas/workbase-intellij-idea";
-    local VERSION="2019.3.3";
-    local PARENT_VERSION="2019.0.1";
-    local IMAGE_NAME="${REPOSITORY}:u-${VERSION}";
+    local local REPOSITORY="ehrlichandreas/workbase-util-scanner";
+    local VERSION="2020.02.16";
+    local PARENT_VERSION="2020.02.16";
+    local IMAGE_NAME="${REPOSITORY}:${VERSION}"
 
     local BUILD_START="$(date '+%s')";
 
@@ -20,7 +20,6 @@ build_docker_image() {
             --force-rm=${NOCACHE} \
             --no-cache=${NOCACHE} \
             --build-arg PARENT_VERSION=${PARENT_VERSION} \
-            --build-arg IDEA_VERSION=${VERSION} \
             -t "${IMAGE_NAME}" \
             -t "${REPOSITORY}:latest" \
             -f "${DOCKERFILE}" \

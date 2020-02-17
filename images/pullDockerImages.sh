@@ -18,10 +18,18 @@ pull_docker_images() {
         ehrlichandreas/workbase-environment:latest \
         ehrlichandreas/workbase-ide-base:2019.0.1 \
         ehrlichandreas/workbase-ide-base:latest \
-        ehrlichandreas/workbase-intellij-idea:u-2019.3.1 \
+        ehrlichandreas/workbase-intellij-idea:u-2019.3.3 \
         ehrlichandreas/workbase-intellij-idea:latest \
         ehrlichandreas/workbase-lyx:2.3.3 \
         ehrlichandreas/workbase-lyx:latest \
+        ehrlichandreas/workbase-util-base:2020.02.16 \
+        ehrlichandreas/workbase-util-base:latest \
+        ehrlichandreas/workbase-util-imagemagick:2020.02.16 \
+        ehrlichandreas/workbase-util-imagemagick:latest \
+        ehrlichandreas/workbase-util-pdf:2020.02.16 \
+        ehrlichandreas/workbase-util-pdf:latest \
+        ehrlichandreas/workbase-util-scanner:2020.02.16 \
+        ehrlichandreas/workbase-util-scanner:latest \
     "
 
     for image in ${images};

@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+docker_library_import() {
+    local _THIS_DIR=$(cd -P -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P);
+    source "${_THIS_DIR}/basic.sh" &>/dev/null \
+        || source "./basic.sh" &>/dev/null;
+}
+docker_library_import;
+
 docker_container_ip() {
     local container="${1}";
     local default="${2}";
@@ -29,4 +36,14 @@ docker_socket_enable() {
     sudo chmod 666 /var/run/docker.sock;
 }
 export -f docker_container_ip;
+
+docker_check_installed() {
+    if [[ "$(command -v "docker" | wc -l)" -gt 0 ]]
+    then
+        echo 1;
+    else
+        echo 0;
+    fi;
+}
+export -f docker_check_installed;
 

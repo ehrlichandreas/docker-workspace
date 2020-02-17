@@ -11,12 +11,12 @@ auto_update_terraform() {
     local INSTALL_DIR="${1:-/usr/local/bin}" && \
     local URL="https://releases.hashicorp.com/terraform" && \
         \
-    local VER="$(curl -sL ${URL} | grep -v beta | grep -v rc1 | grep '<a href="'.*terraform | cut -d'/' -f3 | sort -n | head -n 1)" && \
+    local VER="$(curl -fksSL ${URL} | grep -v beta | grep -v rc1 | grep '<a href="'.*terraform | cut -d'/' -f3 | sort -n | head -n 1)" && \
     local TERRAFORM_VERSION="${2:-${VER}}" && \
     local ZIP="terraform_${TERRAFORM_VERSION}_linux_${dockerArch}.zip" && \
         \
     echo "* Downloading ${URL}/${TERRAFORM_VERSION}/${ZIP}" && \
-    if ! curl -fL -o ${INSTALL_DIR}/${ZIP} "${URL}/${TERRAFORM_VERSION}/${ZIP}"; then \
+    if ! curl -fksSL "${URL}/${TERRAFORM_VERSION}/${ZIP}" -o "${INSTALL_DIR}/${ZIP}"; then \
         echo >&2 "error: failed to download 'terraform-${TERRAFORM_VERSION}' for '${dockerArch}'"; \
         exit 1; \
     fi; \

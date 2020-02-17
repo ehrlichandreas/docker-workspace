@@ -25,7 +25,7 @@ chmod 755 /usr/local/bin/pip3-install.sh && \
 mv /tmp/pip3-install-from-file.sh /usr/local/bin/pip3-install-from-file.sh && \
 chmod 755 /usr/local/bin/pip3-install-from-file.sh && \
 \
-curl -fL https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py && \
+curl -fksSL https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py && \
 apt-install-from-file.sh /tmp/apt-dependencies && \
 python3 /tmp/get-pip.py && \
 pip3-install-from-file.sh /tmp/pip3-dependencies && \
