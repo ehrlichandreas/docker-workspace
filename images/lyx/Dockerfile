@@ -1,7 +1,8 @@
 #@IgnoreInspection BashAddShebang
+ARG PARENT_REPOSITORY="ubuntu"
 ARG PARENT_VERSION="19.10"
 
-FROM ehrlichandreas/workbase-ubuntu:${PARENT_VERSION}
+FROM ${PARENT_REPOSITORY}:${PARENT_VERSION}
 LABEL maintainer="Andreas Ehrlich <ehrlich.andreas@googlemail.com>"
 
 SHELL ["/bin/bash", "-c"]
@@ -16,8 +17,9 @@ export TERM=xterm-256color && \
 apt-install-from-file.sh /tmp/apt-dependencies && \
 \
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys A64833C9F8214ACD && \
-add-apt-repository "deb http://ppa.launchpad.net/lyx-devel/release/ubuntu disco main" && \
-add-apt-repository "deb http://archive.ubuntu.com/ubuntu/ disco multiverse" && \
+add-apt-repository "deb http://ppa.launchpad.net/lyx-devel/release/ubuntu focal main" && \
+add-apt-repository "deb http://archive.ubuntu.com/ubuntu/ bionic main universe" && \
+add-apt-repository "deb http://archive.ubuntu.com/ubuntu/ focal main multiverse" && \
 apt-get -y update && \
 \
 echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections && \

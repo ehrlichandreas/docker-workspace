@@ -10,8 +10,8 @@ SHELL ["/bin/bash", "-c"]
 COPY ./copy /tmp
 
 ARG IDEA_VERSION="2019.3.1"
-ARG IDEA_SOURCE="https://download.jetbrains.com/idea/ideaIU-${IDEA_VERSION}.tar.gz"
-ARG IDEA_LOCAL_DIR=".IntelliJIdeaU"
+ARG IDEA_SOURCE="https://download.jetbrains.com/idea/ideaIC-${IDEA_VERSION}.tar.gz"
+ARG IDEA_LOCAL_DIR=".IntelliJIdeaC"
 
 RUN set -eux; \
 export DEBIAN_FRONTEND=noninteractive && \

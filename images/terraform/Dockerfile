@@ -1,7 +1,8 @@
 #@IgnoreInspection BashAddShebang
+ARG PARENT_REPOSITORY="awscli"
 ARG PARENT_VERSION="1.16"
 
-FROM ehrlichandreas/workbase-aws-cli:${PARENT_VERSION}
+FROM ${PARENT_REPOSITORY}:${PARENT_VERSION}
 LABEL maintainer="Andreas Ehrlich <ehrlich.andreas@googlemail.com>"
 
 SHELL ["/bin/bash", "-c"]

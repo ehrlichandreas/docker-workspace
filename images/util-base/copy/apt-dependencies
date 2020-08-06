@@ -1,9 +1,9 @@
-apt-transport-https=1.9.4*
-bash=5.0*
-bash-completion=1:2.9*
-ca-certificates=20190110
-curl=7.65.3*
-gnupg2=2.2.12*
-gnupg-agent=2.2.12*
-software-properties-common=0.98.5*
+apt-transport-https=2.0.*
+bash=5.*
+bash-completion=1:2.*
+ca-certificates=20190110*
+curl=7.68.*
+gnupg2=2.2.*
+gnupg-agent=2.2.*
+software-properties-common=0.98.*
 tar=1.30*

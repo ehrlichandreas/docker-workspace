@@ -35,6 +35,10 @@ build_docker_images() {
     bash buildDockerImage.sh;
 
     cd "${_THIS_DIR}";
+    cd "intellij-idea-c";
+    bash buildDockerImage.sh;
+
+    cd "${_THIS_DIR}";
     cd "intellij-idea-u";
     bash buildDockerImage.sh;
 

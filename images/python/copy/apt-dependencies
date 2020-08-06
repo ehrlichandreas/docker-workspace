@@ -1,4 +1,4 @@
-ca-certificates=20190110
-curl=7.65.3*
-netbase=5.6
-python3=3.7.5*
+ca-certificates=20190110*
+curl=7.68.*
+netbase=6.1
+python3=3.8.2*

@@ -1,6 +1,8 @@
 #@IgnoreInspection BashAddShebang
+ARG PARENT_REPOSITORY="ubuntu"
 ARG PARENT_VERSION="19.10"
-FROM ehrlichandreas/workbase-ubuntu:${PARENT_VERSION}
+
+FROM ${PARENT_REPOSITORY}:${PARENT_VERSION}
 LABEL maintainer="Andreas Ehrlich <ehrlich.andreas@googlemail.com>"
 
 SHELL ["/bin/bash", "-c"]

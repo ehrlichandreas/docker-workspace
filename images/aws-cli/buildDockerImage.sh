@@ -5,12 +5,17 @@ build_docker_image() {
 
     cd "${_THIS_DIR}";
 
+    source "${_THIS_DIR}/../config.sh" &>/dev/null;
+    source "./../config.sh" &>/dev/null;
+
     local NOCACHE=false;
     local DOCKERFILE="Dockerfile";
-    local REPOSITORY="ehrlichandreas/workbase-aws-cli";
-    local VERSION="1.16.314";
-    local PARENT_VERSION="3.7.5";
+    local REPOSITORY="${awscli_repository}";
+    local VERSION="${awscli_repo_version}";
+    local PARENT_REPOSITORY="${awscli_parent_repository}";
+    local PARENT_VERSION="${awscli_parent_version}";
     local IMAGE_NAME="${REPOSITORY}:${VERSION}";
+    local IMAGE_NAME_LATEST="${REPOSITORY}:latest";
 
     local BUILD_START="$(date '+%s')";
 
@@ -19,9 +24,10 @@ build_docker_image() {
             --network=host \
             --force-rm=${NOCACHE} \
             --no-cache=${NOCACHE} \
+            --build-arg PARENT_REPOSITORY=${PARENT_REPOSITORY} \
             --build-arg PARENT_VERSION=${PARENT_VERSION} \
             -t "${IMAGE_NAME}" \
-            -t "${REPOSITORY}:latest" \
+            -t "${IMAGE_NAME_LATEST}" \
             -f "${DOCKERFILE}" \
             "${_THIS_DIR}";
     } || \

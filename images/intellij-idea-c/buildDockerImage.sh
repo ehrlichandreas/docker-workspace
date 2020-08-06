@@ -10,10 +10,11 @@ build_docker_image() {
 
     local NOCACHE=false;
     local DOCKERFILE="Dockerfile";
-    local REPOSITORY="${util_base_repository}";
-    local VERSION="${util_base_version}";
-    local PARENT_REPOSITORY="${util_base_parent_repository}";
-    local PARENT_VERSION="${util_base_parent_version}";
+    local REPOSITORY="${intellij_idea_c_repository}";
+    local IDEA_VERSION="${intellij_idea_c_version}";
+    local VERSION="${intellij_idea_c_repo_version}";
+    local PARENT_REPOSITORY="${intellij_idea_c_parent_repository}";
+    local PARENT_VERSION="${intellij_idea_c_parent_version}";
     local IMAGE_NAME="${REPOSITORY}:${VERSION}";
     local IMAGE_NAME_LATEST="${REPOSITORY}:latest";
 
@@ -26,6 +27,7 @@ build_docker_image() {
             --no-cache=${NOCACHE} \
             --build-arg PARENT_REPOSITORY=${PARENT_REPOSITORY} \
             --build-arg PARENT_VERSION=${PARENT_VERSION} \
+            --build-arg IDEA_VERSION=${IDEA_VERSION} \
             -t "${IMAGE_NAME}" \
             -t "${IMAGE_NAME_LATEST}" \
             -f "${DOCKERFILE}" \

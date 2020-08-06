@@ -1,7 +1,8 @@
 #@IgnoreInspection BashAddShebang
+ARG PARENT_REPOSITORY="dind"
 ARG PARENT_VERSION="19.03"
 
-FROM ehrlichandreas/workbase-dind:${PARENT_VERSION}
+FROM ${PARENT_REPOSITORY}:${PARENT_VERSION}
 LABEL maintainer="Andreas Ehrlich <ehrlich.andreas@googlemail.com>"
 
 SHELL ["/bin/bash", "-c"]

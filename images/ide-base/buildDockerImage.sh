@@ -5,14 +5,17 @@ build_docker_image() {
 
     cd "${_THIS_DIR}";
 
+    source "${_THIS_DIR}/../config.sh" &>/dev/null;
+    source "./../config.sh" &>/dev/null;
+
     local NOCACHE=false;
     local DOCKERFILE="Dockerfile";
-    local REPOSITORY="ehrlichandreas/workbase-ide-base";
-    local VERSION="2019.0.1";
-    local PARENT_VERSION="19.03.5";
+    local REPOSITORY="${ide_base_repository}";
+    local VERSION="${ide_base_repo_version}";
+    local PARENT_REPOSITORY="${ide_base_parent_repository}";
+    local PARENT_VERSION="${ide_base_parent_version}";
     local IMAGE_NAME="${REPOSITORY}:${VERSION}";
-
-    local DOCKER_VERSION="${VERSION}";
+    local IMAGE_NAME_LATEST="${REPOSITORY}:latest";
 
     local BUILD_START="$(date '+%s')";
 
@@ -21,10 +24,10 @@ build_docker_image() {
             --network=host \
             --force-rm=${NOCACHE} \
             --no-cache=${NOCACHE} \
+            --build-arg PARENT_REPOSITORY=${PARENT_REPOSITORY} \
             --build-arg PARENT_VERSION=${PARENT_VERSION} \
-            --build-arg IDEA_VERSION=${VERSION} \
             -t "${IMAGE_NAME}" \
-            -t "${REPOSITORY}:latest" \
+            -t "${IMAGE_NAME_LATEST}" \
             -f "${DOCKERFILE}" \
             "${_THIS_DIR}";
     } || \

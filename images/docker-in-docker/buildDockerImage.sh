@@ -5,12 +5,17 @@ build_docker_image() {
 
     cd "${_THIS_DIR}";
 
+    source "${_THIS_DIR}/../config.sh" &>/dev/null;
+    source "./../config.sh" &>/dev/null;
+
     local NOCACHE=false;
     local DOCKERFILE="Dockerfile";
-    local local REPOSITORY="ehrlichandreas/workbase-dind";
-    local VERSION="19.03.5";
-    local PARENT_VERSION="19.10";
-    local IMAGE_NAME="${REPOSITORY}:${VERSION}"
+    local REPOSITORY="${docker_repository}";
+    local VERSION="${docker_repo_version}";
+    local PARENT_REPOSITORY="${docker_parent_repository}";
+    local PARENT_VERSION="${docker_parent_version}";
+    local IMAGE_NAME="${REPOSITORY}:${VERSION}";
+    local IMAGE_NAME_LATEST="${REPOSITORY}:latest";
 
     local BUILD_START="$(date '+%s')";
 
@@ -19,9 +24,10 @@ build_docker_image() {
             --network=host \
             --force-rm=${NOCACHE} \
             --no-cache=${NOCACHE} \
+            --build-arg PARENT_REPOSITORY=${PARENT_REPOSITORY} \
             --build-arg PARENT_VERSION=${PARENT_VERSION} \
             -t "${IMAGE_NAME}" \
-            -t "${REPOSITORY}:latest" \
+            -t "${IMAGE_NAME_LATEST}" \
             -f "${DOCKERFILE}" \
             "${_THIS_DIR}";
     } || \

@@ -5,12 +5,18 @@ build_docker_image() {
 
     cd "${_THIS_DIR}";
 
+    source "${_THIS_DIR}/../config.sh" &>/dev/null;
+    source "./../config.sh" &>/dev/null;
+
     local NOCACHE=false;
     local DOCKERFILE="Dockerfile";
-    local REPOSITORY="ehrlichandreas/workbase-intellij-idea";
-    local VERSION="2019.3.3";
-    local PARENT_VERSION="2019.0.1";
-    local IMAGE_NAME="${REPOSITORY}:u-${VERSION}";
+    local REPOSITORY="${intellij_idea_u_repository}";
+    local IDEA_VERSION="${intellij_idea_u_version}";
+    local VERSION="${intellij_idea_u_repo_version}";
+    local PARENT_REPOSITORY="${intellij_idea_u_parent_repository}";
+    local PARENT_VERSION="${intellij_idea_u_parent_version}";
+    local IMAGE_NAME="${REPOSITORY}:${VERSION}";
+    local IMAGE_NAME_LATEST="${REPOSITORY}:latest";
 
     local BUILD_START="$(date '+%s')";
 
@@ -19,10 +25,11 @@ build_docker_image() {
             --network=host \
             --force-rm=${NOCACHE} \
             --no-cache=${NOCACHE} \
+            --build-arg PARENT_REPOSITORY=${PARENT_REPOSITORY} \
             --build-arg PARENT_VERSION=${PARENT_VERSION} \
-            --build-arg IDEA_VERSION=${VERSION} \
+            --build-arg IDEA_VERSION=${IDEA_VERSION} \
             -t "${IMAGE_NAME}" \
-            -t "${REPOSITORY}:latest" \
+            -t "${IMAGE_NAME_LATEST}" \
             -f "${DOCKERFILE}" \
             "${_THIS_DIR}";
     } || \

@@ -1,29 +1,33 @@
 #@IgnoreInspection BashAddShebang
+ARG PARENT_REPOSITORY="dind"
 ARG PARENT_VERSION="19.03"
 
-FROM ehrlichandreas/workbase-dind:${PARENT_VERSION}
+FROM ${PARENT_REPOSITORY}:${PARENT_VERSION}
 LABEL maintainer="Andreas Ehrlich <ehrlich.andreas@googlemail.com>"
 
 SHELL ["/bin/bash", "-c"]
 
 #jdk
-COPY --chown=root:docker --from="openjdk:8u232-jdk-slim" "/usr/local/openjdk-8" "/opt/apps/openjdk-8"
-COPY --chown=root:docker --from="openjdk:11.0.5-jdk-slim" "/usr/local/openjdk-11" "/opt/apps/openjdk-11"
-COPY --chown=root:docker --from="openjdk:13.0.1-jdk-slim" "/usr/java/openjdk-13" "/opt/apps/openjdk-13"
-COPY --chown=root:docker --from="openjdk:14-jdk-slim" "/usr/java/openjdk-14" "/opt/apps/openjdk-14"
-COPY --chown=root:docker --from="openjdk:15-jdk-slim" "/usr/java/openjdk-15" "/opt/apps/openjdk-15"
+COPY --chown=root:docker --from="openjdk:8u265-jdk-slim" "/usr/local/openjdk-8" "/opt/apps/openjdk-8"
+COPY --chown=root:docker --from="openjdk:11.0.8-jdk-slim" "/usr/local/openjdk-11" "/opt/apps/openjdk-11"
+COPY --chown=root:docker --from="openjdk:13.0.2-jdk-slim" "/usr/java/openjdk-13" "/opt/apps/openjdk-13"
+COPY --chown=root:docker --from="openjdk:14.0.2-jdk-slim" "/usr/local/openjdk-14" "/opt/apps/openjdk-14"
+COPY --chown=root:docker --from="openjdk:15-ea-34-jdk-slim" "/usr/local/openjdk-15" "/opt/apps/openjdk-15"
+COPY --chown=root:docker --from="openjdk:16-ea-8-jdk-slim" "/usr/local/openjdk-16" "/opt/apps/openjdk-16"
 #ant
-COPY --chown=root:docker --from="frekele/ant:1.10.3-jdk8" "/opt/ant" "/opt/apps/apache-ant-1.10.3"
+COPY --chown=root:docker --from="frekele/ant:1.10.3-jdk8" "/opt/ant" "/opt/apps/apache-ant"
 #maven
-COPY --chown=root:docker --from="maven:3.5.2-jdk-8-slim" "/usr/share/maven" "/opt/apps/apache-maven-3.5.2"
-COPY --chown=root:docker --from="maven:3.6.3-jdk-8-slim" "/usr/share/maven" "/opt/apps/apache-maven-3.6.3"
+#COPY --chown=root:docker --from="maven:3.5.2-jdk-8-slim" "/usr/share/maven" "/opt/apps/apache-maven-3.5.2"
+COPY --chown=root:docker --from="maven:3.6.3-jdk-8-slim" "/usr/share/maven" "/opt/apps/apache-maven"
 #yarn
-COPY --chown=root:docker --from="node:12.14.1-slim" "/opt/yarn-v1.21.1" "/opt/apps/yarn-1.21.1"
+COPY --chown=root:docker --from="node:12.18.3-slim" "/opt/yarn-v1.22.4" "/opt/apps/yarn"
 #node
-COPY --chown=root:docker --from="node:12.14.1-slim" "/usr/local/bin" "/opt/apps/node-12.14.1/bin"
-COPY --chown=root:docker --from="node:12.14.1-slim" "/usr/local/lib" "/opt/apps/node-12.14.1/lib"
-COPY --chown=root:docker --from="node:13.6.0-slim" "/usr/local/bin" "/opt/apps/node-13.6.0/bin"
-COPY --chown=root:docker --from="node:13.6.0-slim" "/usr/local/lib" "/opt/apps/node-13.6.0/lib"
+COPY --chown=root:docker --from="node:12.18.3-slim" "/usr/local/bin" "/opt/apps/node-12/bin"
+COPY --chown=root:docker --from="node:12.18.3-slim" "/usr/local/lib" "/opt/apps/node-12/lib"
+COPY --chown=root:docker --from="node:13.14.0-slim" "/usr/local/bin" "/opt/apps/node-13/bin"
+COPY --chown=root:docker --from="node:13.14.0-slim" "/usr/local/lib" "/opt/apps/node-13/lib"
+COPY --chown=root:docker --from="node:14.7.0-slim" "/usr/local/bin" "/opt/apps/node-14/bin"
+COPY --chown=root:docker --from="node:14.7.0-slim" "/usr/local/lib" "/opt/apps/node-14/lib"
 
 COPY ./copy /tmp
 
@@ -33,18 +37,18 @@ export APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=DontWarn && \
 export TERM=xterm-256color && \
 \
 \
-export ANT_VERSION="1.10.3" && \
+#export ANT_VERSION="1.10.3" && \
 export JAVA_VERSION="8" && \
-export MAVEN_VERSION="3.6.3" && \
-export NODE_VERSION="12.14.1" && \
-export YARN_VERSION="1.21.1" && \
+#export MAVEN_VERSION="3.6.3" && \
+export NODE_VERSION="12" && \
+#export YARN_VERSION="1.22.0" && \
 \
 apt-install-from-file.sh /tmp/apt-dependencies && \
 \
 rm -rf /tmp/* && \
 \
 \
-export ANT_HOME="/opt/apps/apache-ant-${ANT_VERSION}" && \
+export ANT_HOME="/opt/apps/apache-ant" && \
 update-alternatives --install "/usr/local/bin/ant" "ant" "${ANT_HOME}/bin/ant" 1 && \
 update-alternatives --set "ant" "${ANT_HOME}/bin/ant" && \
 \
@@ -60,7 +64,7 @@ update-alternatives --install "/usr/local/bin/javaws" "javaws" "${JAVA_HOME}/bin
 update-alternatives --set "javaws" "${JAVA_HOME}/bin/javaws" || echo "javaws not found" && \
 \
 \
-export MAVEN_HOME="/opt/apps/apache-maven-${MAVEN_VERSION}" && \
+export MAVEN_HOME="/opt/apps/apache-maven" && \
 update-alternatives --install "/usr/local/bin/mvn" "mvn" "${MAVEN_HOME}/bin/mvn" 1 && \
 update-alternatives --set "mvn" "${MAVEN_HOME}/bin/mvn" && \
 update-alternatives --install "/usr/local/bin/mvnDebug" "mvnDebug" "${MAVEN_HOME}/bin/mvnDebug" 1 || echo "mvnDebug not found" && \
@@ -69,7 +73,7 @@ update-alternatives --install "/usr/local/bin/mvnyjp" "mvnyjp" "${MAVEN_HOME}/bi
 update-alternatives --set "mvnyjp" "${MAVEN_HOME}/bin/mvnyjp" || echo "mvnyjp not found" && \
 \
 \
-export YARN_HOME="/opt/apps/yarn-${YARN_VERSION}" && \
+export YARN_HOME="/opt/apps/yarn" && \
 export NODE_HOME="/opt/apps/node-${NODE_VERSION}" && \
 cd "${NODE_HOME}/bin" && \
 rm "${NODE_HOME}/bin/nodejs" && \
@@ -79,8 +83,8 @@ ln -s "${YARN_HOME}/bin/yarn" yarn && \
 rm "${NODE_HOME}/bin/yarnpkg" && \
 ln -s "${YARN_HOME}/bin/yarnpkg" yarnpkg && \
 \
-export YARN_HOME="/opt/apps/yarn-${YARN_VERSION}" && \
-export NODE_HOME="/opt/apps/node-13.6.0" && \
+export YARN_HOME="/opt/apps/yarn" && \
+export NODE_HOME="/opt/apps/node-13" && \
 cd "${NODE_HOME}/bin" && \
 rm "${NODE_HOME}/bin/nodejs" && \
 ln -s node nodejs && \
@@ -100,11 +104,11 @@ update-alternatives --install "/usr/local/bin/npx" "npx" "${NODE_HOME}/bin/npx" 
 update-alternatives --set "npx" "${NODE_HOME}/bin/npx" && \
 \
 \
-export YARN_HOME="/opt/apps/yarn-${YARN_VERSION}" && \
+export YARN_HOME="/opt/apps/yarn" && \
 update-alternatives --install "/usr/local/bin/yarn" "yarn" "${YARN_HOME}/bin/yarn" 1 && \
 update-alternatives --set "yarn" "${YARN_HOME}/bin/yarn" && \
 update-alternatives --install "/usr/local/bin/yarnpkg" "yarnpkg" "${YARN_HOME}/bin/yarnpkg" 1 && \
 update-alternatives --set "yarnpkg" "${YARN_HOME}/bin/yarnpkg"
 
 ENTRYPOINT []
-CMD ["/opt/idea/bin/idea-starter.sh"]
+CMD ["bash"]
